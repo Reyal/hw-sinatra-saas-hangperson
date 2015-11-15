@@ -51,7 +51,6 @@ class HangpersonGame
   end
   
   def self.get_random_word
-   self.get_random_word
     require 'uri'
     require 'net/http'
     uri = URI('http://watchout4snakes.com/wo4snakes/Random/RandomWord')
