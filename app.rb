@@ -40,7 +40,19 @@ class HangpersonApp < Sinatra::Base
   post '/guess' do
     letter = params[:guess].to_s[0]
     ### YOUR CODE HERE ###
-    @game.guess(letter)
+    if letter == nil or letter.size == 0 or letter.size > 1 or letter =~ /\W/ then
+      flash[:message] = "Invalid guess." 
+    elsif @game.guesses.include? letter.downcase or @game.wrong_guesses.include? letter.downcase then
+      flash[:message] = "You have already used that letter."
+    else
+      @game.guess(letter.downcase)
+      case
+      when @game.check_win_or_lose == :win then redirect '/win'
+      #when @game.check_win_or_lose == :win then flash[:message] = "You Win!"
+      when @game.check_win_or_lose == :lose then redirect '/lose'
+      end
+      
+    end
     redirect '/show'
   end
   
